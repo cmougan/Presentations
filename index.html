@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Applied Machine Learning Engineering</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Alejandro Encalado Masia">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/white.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--
+Overview/Bullet points (some of this information is extracted from How to win a data science competition (https://es.coursera.org/learn/competitive-data-science) and Andriy Burkov’s book of Machine Learning Engineering:
+
+cid:image001.png@01D5F6BB.CFB94340
+
+
+
+ 
+
+
+-        Modeling:
+
+o   No free lunch theorem: Explain the case of Deloitte
+
+o   Choosing the right algorithm or what actually happens: trying them all.
+
+o   Which algorithm is using which loss function by default
+
+o   Ensemble of trained models
+
+o   XAI: Feature Importance, decision tree plotting and SHAP values
+
+o    
+
+ 
+
+-        Production
+
+o   API      
+
+o   Dashboard
+
+o   Automated Script
+		 -->
+		
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- In between the <div="reveal"> and the <div class="slides">-->	
+			<header style="position: absolute;top: 50px; left: 100px; z-index:500;"></header>
+			<!-- In between the <div="reveal"> and the <div class="slides">-->
+			
+			<div class="slides">
+					<section data-markdown data-background="">
+							<script type="text/template">
+								
+								#### Applied Machine Learning Engineering
+								<sub><sup>
+								David Masip & Carlos Mougan
+								</sub></sup>
+							</script>
+					</section>
+					<section>
+						<h4>Content</h4>
+						<ul>
+							 <li><a href="http://www.mlebook.com/wiki/doku.php"> Machine Learning Engineering by Andriy Burkov.</a> </li>
+							 <li><a href="https://www.coursera.org/learn/competitive-data-science"> How to win a Kaggle competition: Cousera</a> </li>
+							 <li><a href="https://web.stanford.edu/~hastie/Papers/ESLII.pdf"> The Elements of Statistical learning - R. Tibshirani</a> </li>
+							 <li><a href="https://datascience.stackexchange.com/"> DataScienc Stack Exchange, Medium, Analytics Vidya..</a> </li>
+						</ul>
+
+					</section>
+
+
+
+
+					<section data-background="#FFFFFF" data-background-transition="zoom">
+						<section>
+						<h4>Machine Learning Project life cycle</h4>
+							
+							<img class="plain" src="image/MLE_graph.png">
+						</section>
+
+							
+						<section>
+							Our focus
+						</section>
+						<section>
+							<img class="plain" src="image/mle_focus.png">
+							
+						</section>
+					</section>
+
+
+					<section data-transition="slide" data-background="#FFFFFF" data-background-transition="zoom">
+						<section>
+							<h2>Outline</h2>
+						
+							<ul>
+							  <li>Problem Definition</li>
+							  <li>Pre processing & Data Cleaning</li>
+							  <li>Feature Engineering</li>
+							  <li>Validation</li>
+							  <li>Loss function</li>
+							  <li>Modeling</li>
+							</ul>
+						</section>
+						<section>
+							<h3>Use case</h3>Car accident severity prediction
+						</section>
+						<section>
+							<h4>Hack UPC challenge - Barcelona</h4>
+							<a href="https://github.com/FaradayDetu/HackUPC2019/tree/master/mckinsey">Github</a> 
+						</section>
+					</section>
+
+<!--					
+-        Defining a question/task: Creating a machine learning problem. What do you need to do before starting to code?
+
+o   The question to resolve
+
+o   Having the data
+-->
+					<section>
+						<section id="fragments">
+							<h2>Problem Definition </h2>
+							<p>Creating a Machine Learning problem</p>
+							<p class="fragment"><img class="plain" src="image/MLE_graph_goal.png"></p>
+						</section>
+
+						<section id="fragments">
+							<h2>Problem Definition </h2>
+							<p>Creating a Machine Learning problem</p>
+							<p><span class="fragment"><font color="red">What do we need before starting to code?</font></span></p>
+							<ul>
+								<li class="fragment"><span>The question to resolve</span></li>
+								<li class="fragment"><span>Having the data</span></li>
+							</ul>
+						</section>
+
+					<section>
+											
+					</section>
+					<section>
+						<h4>Car accident severity prediction</h4>
+						<ul>
+							<li class="fragment"><span >The question to resolve
+								<p><font color="red">How bad is an accident? </font></p>
+							</span></li>
+							<li class="fragment"><spa>Having the data
+								<p><font color="red">Yes, it was provided by the competition</font></p>
+							</span></li>
+						</ul>						
+					</section>
+					</section>
+
+<!--					
+-        Pre-processing + Cleaning: What do I need to prepare before even thinking about machine learning?
+
+o   Sampling: Selecting a fraction, data freshness, stratification
+
+o   Reduce Memory: Importance of it.
+
+o   Importance of the label
+
+-->
+					<section>
+						<section>
+							<h2>Pre processsing & Data Cleaning</h2>
+							<p class="fragment"><img class="plain" src="image/MLE_graph_dataprep.png"></p>
+						</section>
+
+						<section>
+							<h2>Pre processsing & Data Cleaning</h2>
+							<p><span class="fragment"><font color="red">What do I need to prepare before even thinking about machine learning?</font></span></p>
+							<p class="fragment">The goal: <h5 class="fragment"> <font color="red"> Data Quality </font></h5></p>
+							
+						</section>
+
+						<section>
+							<h4>Outliers & Anomalies</h4>
+							<ul>
+								<li class="fragment"><span>Remove</span></li>
+								<li class="fragment"><span>Create another feature</span></li>
+								<li class="fragment"><span>Winsorize</span></li>
+							</ul>
+						</section>
+
+						<section>
+							<b>Winsorization</b> 
+							<img   class="plain" src="image/winsor_viz.png">
+							
+						</section>
+						<section>
+							<b>Winsorization</b> 
+							<p class="fragment">
+							<img   class="plain" src="image/winsor.png">
+							</p>
+							<p>
+							<span class="fragment"><b>When does it make sense?</b></span>
+							</p>
+							<p>
+							<span class="fragment">Generalized Linear Models</span>
+							</p>
+						</section>
+
+						<section>
+						
+							<h4>Dealing with memory </h4>
+							<span class="fragment">Sampling:
+							</span>
+							<p class="fragment">
+								<ul>
+									<li class="fragment">Selecting a fraction</li>
+									<li class="fragment">Data freshness</li>
+								</ul>
+							</p>
+							<span class="fragment">Reduce Memory: 9 seconds rule</span>
+						</section>
+
+
+						<section>
+							<h4>Missing values</h4>
+							<ul>
+								<li>
+									MCAR: Missing completely at random
+								</li>
+								<li>
+									MAR:  Missing at random 
+								</li>
+								<li>
+									MNAR: Missing not at random
+								</li>
+								
+							</ul>
+						</section>
+						<section>
+						<h4>Missing values</h4>
+						<ul>
+							<li>Hidden Nan's: Draw histogram</li>
+							<li>Sometimes we can resconstruct</li>
+						</ul>
+						</section>
+						<section>
+							<h4>Imputation strategies:</h4>
+							<span class="fragment">
+								<ul>
+									<li>
+									Mean
+									</li>
+									<li>
+									Median
+									</li>
+									<li>
+									Fixed value: 0,-1,999
+									</li>
+									<li>
+										<a href="https://datascience.stackexchange.com/questions/66303/how-to-impute-missing-values-not-the-usual-way/66324#66324">Many more</a>
+										
+									</li>
+								</ul> 
+						</section>
+						<section>
+							<h4><font color="red">Our case</font></h4>
+							<p class="fragment">Tried all imputations, the best = Mean</p>
+						</section>
+						
+					</section>
+
+<!--					
+-        Data Engineering: Once we have our data, what can we do with it before training any model? Iterative process.
+
+o   ISIN Encoding for Decision Trees and Neural Networks
+
+o   Treatment of categorical features [https://contrib.scikit-learn.org/categorical-encoding/]: Target Encoding, Frequency Encoding, Weight of Evidence
+
+-->
+					<section>
+						<section>
+							<h2>Data Engineering</h2>
+							<p class="fragment"><img class="plain" src="image/MLE_graph_feat.png"></p>
+						</section>
+
+
+						<section>
+							<h2>Data Engineering</h2>
+							<p><span class="fragment">Once we have our data, <font color="red">  what can we do with it before training any model?</font></span></p>
+						</section>
+
+						<section>
+							<h3><font color="red"> Our case </font></h3>
+							<ul>
+								<li>Categorical Features</li>
+								<li>Coordinates features</li>
+								<li>Numerical Features</li>
+								<li>Date and Time</li>
+							</ul>
+						</section>
+
+						<section>
+							<h4>Categorical features</h4>
+							<ul class="fragment">
+								<li>One Hot Encoding</li>
+								<img width="700" class="plain" data-src="image/one_hot.png">
+								
+							</ul>
+						</section>
+						<section>
+							<h4>Categorical features</h4>
+							<ul class="fragment">
+								<li>Target Encoding</li>
+								<pre><code class="hljs" data-trim data-line-numbers="1">
+								df.groupby('x0')['y'].mean()
+								</code></pre>
+								<img width="700" class="plain" data-src="image/te.png">
+							</ul>
+						</section>
+
+						<section>
+							<h3><font color="red"> Our case </font></h3>
+							<ul>
+								<li>Vehicles in the accident</li>
+								<li>Manouvre</li>
+								<li>Impacts on the accident</li>
+								<li>Type of road</li>
+								<li>Weather conditions</li>
+							</ul>
+						</section>
+
+						<section>
+							<h2>Date time</h2>
+							<ul>
+								<li>Periodical: weekdays, month</li>
+								<li>Time since event</li>
+								<li>Difference between dates</li>
+								<li>Lag features</li>
+							</ul>
+						</section>
+						
+
+					
+						<section data-background-iframe="image/heatmap.html">
+							<h2>Geographical Data</h2>
+						 
+								
+						</section>
+
+
+						<section data-background-iframe="image/heatmap.html">
+							<h2>Coordinates</h2>
+							<h3><font color="red"> Our case </font></h3>
+							<ul>
+								<li>Geographical Encoding</li>
+								<li>Distance from cities</li>
+							</ul>
+						</section>
+						<section>
+							<h2>Numerical data</h2>
+							<h3><font color="red"> Our case </font></h3>
+							<ul>
+								<li>Frecuency encodigns</li>
+								<li>Max/mean/min/count of age of driver</li>
+								<li>Max/mean/min/coun number of people in vehicle</li>
+								
+								
+							</ul>
+							
+						</section>
+						
+					
+					</section>
+
+<!--					
+-        Validation: Why is validation important? Why just not skip this?
+
+o   Reproducing production in your train test and cv split
+
+o   Random versus temporal split.
+
+o   Expanding window versus Rolling window
+-->
+					<section>
+						<section>
+							<h2>Validation</h2>
+							<p class="fragment"><img class="plain" src="image/MLE_graph_model.png"></p>
+						</section>
+						<section>
+							<h2>Validation</h2>
+							<p><span class="fragment"> <font color="red">  Why is validation important? Why just not skip this?</font></span></p>
+						</section>
+						<section><font size="6">"While everyone will agree that fabrication of results is bad, it is rare. More common problems are wishful thinking or over-marketing."</font> 
+						<p>
+						 <font size="4"> - Franz Kiraly @ Alan Turing Institute</font>
+						 </p>
+
+						</section>
+
+						<section>
+							We need to evaluate how the model will behave in production
+							<p class="fragment"> <b> Train test split the most similar way to real life </b></p>
+						</section>
+
+						<section>
+							<h2>Temporal Split</h2>
+							<ul>
+								<li>Expanding Window</li>
+								<li>Slidding/roll-out window</li>
+							</ul>
+							<img width="700" class="plain" data-src="image/timevalidation.png">
+						</section>
+						<section>
+							<h3><font color="red"> Our case </font></h3>
+							Temporal Split
+							<p class="fragment">
+							<img width="700" class="plain" data-src="image/split.png">
+							</p>
+							
+						</section>
+						
+					
+					</section>
+
+
+
+ 
+
+					<section>
+						<section>
+							<h2>Modeling</h2>
+							<p class="fragment"><img class="plain" src="image/MLE_graph_model.png"></p>
+						</section>
+
+						<section>
+							<h2>Modeling</h2>
+							<p><span class="fragment"> <font color="red">  Choosing the right model</font></span></p>
+						</section>
+						<section>
+							<h4>Metric vs loss function</h4>
+							<ul>
+								<li>Metric is what we want to optimize</li>
+								<li>Optimization loss is what the model optimizes.</li>
+							</ul>
+						</section>
+						<section>
+							<h4>Classification losses</h4>
+							<p>What the model optimizes</p>
+							<ul>
+								<li>Binary Cross Entropy</li>
+								<li>Logaritmic loss</li>
+							</ul>
+						</section>
+						<section>
+							<h4>Classification Metrics</h4>
+							<p>What we want to optimize</p>
+							<ul>
+								<li>Accuracy/Precision</li>
+								<li>Sensitivy/Specifity</li>
+								<li>F1 Score</li>
+								<li>AUC ROC</li>
+							</ul>
+						</section>
+						<section>
+							<p><span> <font color="red">  Our case</font></span></p>
+
+							<p>F1 Score</p>
+							
+							$$ F_{1}  = 2 \cdot \frac{precision \cdot recall}{precision+recall} \\
+							Precision  = \frac{tp}{tp +fp} \\
+							Recall  = \frac{tp}{tp + fn} $$
+							
+							
+						</section>
+
+						<section>
+							<p>Loss: Binary Cross entropy</p>
+							<p>Metric: F1 Score</p>
+							<p class="fragment"><font color="red"> How to minimize F1 score?</font></p>
+
+						</section>
+						<section>
+							<h4>Approaches</h4>
+							<ul>
+								<li>Run the right model</li>
+								<li>Pre-post process the prediction</li>
+								<li>Write custom loss function</li>
+								<li>Optimize another metric and run early stopping</li>
+							</ul>
+						</section>
+
+
+						<section>
+							<p><span> <font color="red">  Our case</font></span></p>
+
+							Post process the prediction: optimal threshold
+							
+							<p class="fragment"><img class="plain" src="image/metricsevol.svg"></p>
+						</section>
+					<section>
+						<h2>Models Used</h2>
+						<p class="fragment"><img class="plain" src="image/MLE_graph_model.png"></p>
+					</section>
+
+					<section>
+						<h4>Gradient Boosted Machines (GBM)</h4>
+						<ul>
+							<li><a href="https://catboost.ai/"> Catboost</a></li>
+							<li><a href="https://xgboost.readthedocs.io/en/latest/"> Xtreme Gradient Boosting</a></li>
+						</ul>
+					</section>
+
+
+					<section>
+						<h4>Gradient Boosted Machines (GBM)</h4>
+						<p class="fragment"><img class="plain" src="image/feature_importance.png"></p>
+					</section>
+
+					<section>
+						<h4>Generalized Linear Model: GLM</h4>
+						<h5>Lasso</h5>
+					</section>
+					<section>
+							<h2>Emergency utility</h2>
+							<a href="https://davidmasip.shinyapps.io/severity-predictor_copia_2/">URL</a>
+					</section>
+
+					<section>
+							<h2>Emergency utility</h2>
+							<iframe class="stretch" data-src="https://davidmasip.shinyapps.io/severity-predictor_copia_2/"></iframe>
+					</section>
+					
+					</section>									
+
+					<section>
+						<section>
+							<h2>Summary</h2>
+							<p class="fragment"><img class="plain" src="image/MLE_graph.png"></p>
+						</section>
+						<section>
+							<h4>Thanks for your attention</h4>
+						</section>
+
+					</section>
+
+
+
+
+
+
+
+					
+					
+					
+
+			</div>
+		</div>
+		<script src="js/reveal.js"></script>
+
+
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true },
+					{ src: 'plugin/search/search.js', async: true },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true },
+					// MathJax
+					{ src: 'plugin/math/math.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
