@@ -1,2 +1,0 @@
-# MachineLearningEngineering
-MachineLearningEngineering presentation
