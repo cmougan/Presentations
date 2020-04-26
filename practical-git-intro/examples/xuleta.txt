@@ -1,0 +1,22 @@
+
+
+# Tirar enrere abans de commit
+git reset --hard HEAD
+
+# Go back to previous commit
+https://stackoverflow.com/questions/4114095/how-do-i-revert-a-git-repository-to-a-previous-commit
+
+# Go back to previous commit (dangerous!)
+git revert commit_id
+git push
+
+
+# Branches
+
+git branch toca_fitxer_1
+git checkout -b toca_fitxer_1
+-- Comits
+git checkout master
+-- Comits master
+git merge toca_fitxer_1
+esc -> :qa!
