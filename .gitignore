@@ -142,3 +142,4 @@ vignettes/*.pdf
 *.png
 
 .DS_Store
+.csv
