@@ -8,5 +8,5 @@ Presented at:
  - European Central Bank, Staff to Staff ... to do
 
 ## Intro to git
-24/April/2020
+- UAB ML club - 24/April/2020
 
