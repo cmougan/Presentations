@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Applied Machine Learning Engineering</title>
+		
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Alejandro Encalado Masia">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/white.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--
+Overview/Bullet points (some of this information is extracted from How to win a data science competition (https://es.coursera.org/learn/competitive-data-science) and Andriy Burkov’s book of Machine Learning Engineering:
+
+cid:image001.png@01D5F6BB.CFB94340
+
+
+
+ 
+
+
+-        Modeling:
+
+o   No free lunch theorem: Explain the case of Deloitte
+
+o   Choosing the right algorithm or what actually happens: trying them all.
+
+o   Which algorithm is using which loss function by default
+
+o   Ensemble of trained models
+
+o   XAI: Feature Importance, decision tree plotting and SHAP values
+
+o    
+
+ 
+
+-        Production
+
+o   API      
+
+o   Dashboard
+
+o   Automated Script
+		 -->
+		
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- In between the <div="reveal"> and the <div class="slides">-->	
+			<header style="position: absolute;top: 50px; left: 100px; z-index:500;"></header>
+			<!-- In between the <div="reveal"> and the <div class="slides">-->
+			
+			<div class="slides">
+					<section data-markdown data-background="">
+							<script type="text/template">
+								
+								#### Any boston at home?
+								<sub><sup>
+								David Masip & Leonardo Gonzalez  & Carlos Mougan
+								</sub></sup>
+							</script>
+					</section>
+
+					<section>
+						<img class="plain" src="image/submission.png">	
+					</section>
+
+					<section>
+						<h4>What its interesting</h4>
+						<ul>
+							 <li>Feature Engineering</li>
+							 <li>Mathematical modeling</li>
+						</ul>
+
+					</section>
+					<section>
+						<section>
+							<h4>Feature Engineering</h4>
+							 Looked at a couple of papers about the collision
+							 <ul>
+							 	<span class="fragment">
+							 	<li> <a href="https://www.researchgate.net/publication/257291102_Measurement_of_CP_observables_in_B_0_DK_0_with_D_K_K_-">Measurement of CP observables in B 0 → DK ∗0 with D →K + K- [1]</a></li>
+	
+							 	<li> <a href="https://www.quantumdiaries.org/2015/01/27/looking-forward-to-2015-analysis-techniques/">Helicity Angles [2]</a></li>
+
+							 	<li> <a href="https://inspirehep.net/literature/1247059">Angular analysis of B^0 \to \phi K^{*}B 0→ϕK ∗ decays and search for CPCP violation at Belle [3]</a></li>
+							 	</span>
+							 </ul>
+
+						</section>
+						<section>
+						<h4>Feature Engineering</h4>
+						<p>Particle schema with the features of the problem</p>
+						<img class="plain" src="image/particle_graph.jpeg">	
+						</section>
+						<section>
+							<h4>Results</h4>
+							<ul>
+								<li>181 Features</li>
+								<li>Baseline: 0.90AUC (default lightgbm)</li>
+							</ul>
+						</section>
+					</section>
+					<section>
+						<section>
+						<h4>Mathematical Modeling</h4>
+						<ul>
+							<span class="fragment">
+							<li>FastAI Default NN - 0.929</li>
+							</span>
+
+							<span class="fragment">
+							<li>Selfmade Resnet, Pytorch - 0.934</li>
+							</span>
+
+							<span class="fragment">
+							<li>Ensemble: 0.937 - (0.86*resnet + 0.14*fastai)</li>
+							</span>
+						</ul>
+						</section>
+
+		
+
+						<section>
+							<h4>What worked for us</h4>
+							<span class="fragment"><a href="https://medium.com/rapids-ai/gauss-rank-transformation-is-100x-faster-with-rapids-and-cupy-7c947e3397da#:~:text=Gauss%20rank%20transformation%20is%20a,model%20by%20a%20significant%20margin.">Scaling: Gauss Rank Transformation</a>
+							</span>
+							<span class="fragment">
+								<ul>
+								<li>0.01 Improvement on AUC</li>
+								<li>2x Faster tranning - 1h30</li>
+								</ul>
+							</span>
+						</section>	
+						<section>
+							<h4>Averaging predictions through epochs</h4>
+							<span class="fragment">
+							<p>
+								mean(pred_100 + pred_200 + pred_300)
+							</p>
+							<img class="fragments" src="image/auc_NN.png" width="400" height="400">	
+							</span>
+						</section>
+					</section>
+					<section>
+						END
+					</section>
+
+
+
+
+
+
+
+					
+					
+					
+
+			</div>
+		</div>
+		<script src="js/reveal.js"></script>
+
+
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true },
+					{ src: 'plugin/search/search.js', async: true },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true },
+					// MathJax
+					{ src: 'plugin/math/math.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
